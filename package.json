@@ -1,0 +1,25 @@
+{
+  "name": "firekv",
+  "version": "1.0.0",
+  "description": "A Firebase style ORM for Deno KV",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Damilola Alao",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.10",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.2",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@deno/kv": "^0.8.1"
+  }
+}
