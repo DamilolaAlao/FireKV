@@ -1,5 +1,3 @@
-Here's a README.md file for your open-source FireKV library:
-
 ````markdown
 # FireKV
 
@@ -71,6 +69,13 @@ const user = await usersCollection.get(userId);
 console.log("Retrieved user:", user);
 ```
 
+### Getting all documents (get all)
+
+```typescript
+const users = await usersCollection.getAll();
+console.log("Retrieved users:", users);
+```
+
 ### Deleting a document (delete)
 
 ```typescript
@@ -106,6 +111,7 @@ Creates and returns a new FireKV instance.
 - `add(data: T): Promise<string>` - Adds a new document and returns its ID.
 - `set(id: string, data: T): Promise<void>` - Sets a document with the specified ID.
 - `get(id: string): Promise<T | null>` - Retrieves a document by ID.
+- `getAll(): Promise<T[]>` - Retrieves all documents.
 - `delete(id: string): Promise<void>` - Deletes a document by ID.
 - `query(field: keyof T, operator: string, value: any): Promise<T[]>` - Queries documents based on field, operator, and value.
 
