@@ -1,4 +1,5 @@
 import { openKv, Kv } from "@deno/kv";
+import crypto from "crypto";
 
 type Document = Record<string, any>;
 
