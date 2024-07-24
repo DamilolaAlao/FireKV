@@ -111,5 +111,25 @@ describe("FireKV", () => {
         ])
       );
     });
+
+    //getall test
+    test("getAll should return all documents", async () => {
+      const doc1: TestDoc = { name: "John", age: 30 };
+      const doc2: TestDoc = { name: "Jane", age: 25 };
+      const doc3: TestDoc = { name: "Bob", age: 40 };
+      await collection.add(doc1);
+      await collection.add(doc2);
+      await collection.add(doc3);
+
+      const results = await collection.getAll();
+      expect(results).toHaveLength(3);
+      expect(results).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(doc1),
+          expect.objectContaining(doc2),
+          expect.objectContaining(doc3),
+        ])
+      );
+    });
   });
 });

@@ -7,6 +7,7 @@ interface Collection<T extends Document> {
   add: (data: T) => Promise<string>;
   set: (id: string, data: T) => Promise<void>;
   get: (id: string) => Promise<T | null>;
+  getAll: () => Promise<T[]>;
   delete: (id: string) => Promise<void>;
   query: (field: keyof T, operator: string, value: any) => Promise<T[]>;
 }
@@ -37,6 +38,15 @@ export const createFireKV = async (
     const get = async (id: string): Promise<T | null> => {
       const result = await kv.get([name, id]);
       return result.value as T | null;
+    };
+
+    const getAll = async (): Promise<T[]> => {
+      const results: T[] = [];
+      const prefix = [name];
+      for await (const entry of kv.list({ prefix })) {
+        results.push(entry.value as T);
+      }
+      return results;
     };
 
     const delete_ = async (id: string): Promise<void> => {
@@ -86,7 +96,7 @@ export const createFireKV = async (
       return results;
     };
 
-    return { add, set, get, delete: delete_, query };
+    return { add, set, get, getAll, delete: delete_, query };
   };
 
   return {
