@@ -10,6 +10,7 @@ interface Collection<T extends Document> {
   getAll: () => Promise<T[]>;
   delete: (id: string) => Promise<void>;
   query: (field: keyof T, operator: string, value: any) => Promise<T[]>;
+  paginate: (limit: number, offset: number) => Promise<T[]>;
 }
 
 interface FireKV {
@@ -96,7 +97,22 @@ export const createFireKV = async (
       return results;
     };
 
-    return { add, set, get, getAll, delete: delete_, query };
+    const paginate = async (limit: number, offset: number): Promise<T[]> => {
+      const results: T[] = [];
+      const prefix = [name];
+      let index = 0;
+
+      for await (const entry of kv.list({ prefix })) {
+        if (index >= offset && results.length < limit) {
+          results.push(entry.value as T);
+        }
+        index++;
+      }
+
+      return results;
+    };
+
+    return { add, set, get, getAll, delete: delete_, query, paginate };
   };
 
   return {
