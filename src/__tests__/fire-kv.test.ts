@@ -131,5 +131,29 @@ describe("FireKV", () => {
         ])
       );
     });
+
+    test("paginate should return limited documents with offset", async () => {
+      const doc1: TestDoc = { name: "John", age: 30 };
+      const doc2: TestDoc = { name: "Jane", age: 25 };
+      const doc3: TestDoc = { name: "Bob", age: 40 };
+      await collection.add(doc1);
+      await collection.add(doc2);
+      await collection.add(doc3);
+
+      const resultsPage1 = await collection.paginate(2, 0);
+      expect(resultsPage1).toHaveLength(2);
+      expect(resultsPage1).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(doc1),
+          expect.objectContaining(doc2),
+        ])
+      );
+
+      const resultsPage2 = await collection.paginate(2, 2);
+      expect(resultsPage2).toHaveLength(1);
+      expect(resultsPage2).toEqual(
+        expect.arrayContaining([expect.objectContaining(doc3)])
+      );
+    });
   });
 });

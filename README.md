@@ -1,4 +1,3 @@
-````markdown
 # FireKV
 
 FireKV is a lightweight, type-safe document database abstraction layer for Deno's Key-Value (KV) store. It provides a Firebase-like API for easy data management with TypeScript support.
@@ -18,7 +17,6 @@ To use FireKV in your Deno project, you can import it directly from the GitHub r
 ```typescript
 import { createFireKV } from "firekv";
 ```
-````
 
 ## Usage
 
